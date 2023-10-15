@@ -1,37 +1,106 @@
 <!-- index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Star Wars Quote App</title>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <title>Star Wars Quote App</title>
+    <style>
+        /* Add CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
 
-    <body>
-        <h1>CREATE: May Node and Express be with you.</h1>
-        
-        <!-- (1): CREATE Task -->         
-        <!-- --> 
-        <form action="/quotes" method="POST">   
-            <input type="text" placeholder="name" name="name" />        
-            <input type="text" placeholder="quote" name="quote" />
-            <button type="submit">Submit</button>
-        </form>
-        <!-- -->                               
+        h1 {
+            color: #333;
+        }
 
-        <!-- (2) READ Task -->                        
-        <h2> READ: All Quotes in Database </h2>
-        <ul class="quotes">
-            <!-- Loop through quotes -->
-            <% for(var i = 0; i < quotes.length; i++) {%>
-                <li class="quote">
-                    <!-- Output name from the iterated quote object -->
-                    <span><%= quotes[i].name %></span>:
-                    <!-- Output quote from the iterated quote object -->
-                    <span><%= quotes[i].quote %></span>
-                </li>
-            <% } %>
-        </ul>    
-    
-    </body>
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quotes {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .quote {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .quote span {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .quote button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CREATE: May Node and Express be with you.</h1>
+
+    <!-- (1): CREATE Task -->
+    <form action="/quotes" method="POST">
+        <input type="text" placeholder="name" name="name" />
+        <input type="text" placeholder="quote" name="quote" />
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- (2) READ Task -->
+    <h2> READ: All Quotes in Database </h2>
+    <ul class="quotes">
+        <!-- Loop through quotes -->
+        <% for(var i = 0; i < quotes.length; i++) {%>
+        <li class="quote">
+            <!-- Output name from the iterated quote object -->
+            <span><%= quotes[i].name %></span>:
+            <!-- Output quote from the iterated quote object -->
+            <span><%= quotes[i].quote %></span>
+            <!-- Edit button -->
+            <form action="/quotes/<%= quotes[i]._id %>/edit" method="GET">
+                <button type="submit">Edit</button>
+            </form>
+            <!-- Delete button -->
+            <form action="/quotes/<%= quotes[i]._id %>/delete" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        <% } %>
+    </ul>
+</body>
 
 </html>
