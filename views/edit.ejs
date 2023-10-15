@@ -4,16 +4,81 @@
     <head>
         <meta charset="UTF-8" />
         <title>Edit Quote</title>
+        <style>
+            /* Add CSS styling here */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+    
+            h1 {
+                color: #333;
+            }
+    
+            form {
+                margin-bottom: 20px;
+            }
+    
+            input[type="text"] {
+                padding: 10px;
+                font-size: 16px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                width: 250px;
+                margin-right: 10px;
+            }
+    
+            button[type="submit"] {
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #333;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+    
+            .quotes {
+                list-style-type: none;
+                padding: 0;
+            }
+    
+            .quote {
+                background-color: #fff;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+    
+            .quote span {
+                font-size: 16px;
+                color: #333;
+            }
+    
+            .quote button {
+                padding: 5px 10px;
+                font-size: 14px;
+                background-color: #333;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-left: 10px;
+            }
+        </style>
     </head>
 
     <body>
-        <h1>Edit Quote</h1>
+        <h1>Product editing</h1>
         
         <form action="/quotes/<%= quote._id %>/update" method="POST">   
             <input type="text" placeholder="name" name="name" value="<%= quote.name %>" />        
             <input type="text" placeholder="quote" name="quote" value="<%= quote.quote %>" />
             <button type="submit">Update</button>
         </form>
+        <a href="/">Back to Home</a>
     </body>
 
 </html>

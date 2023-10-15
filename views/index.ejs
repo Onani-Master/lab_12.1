@@ -1,11 +1,17 @@
 <!-- index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>Star Wars Quote App</title>
     <style>
         /* Add CSS styling here */
+        .header {
+        text-align: center;
+        color: #333;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -69,38 +75,74 @@
         }
     </style>
 </head>
-
+<header class="header">
+    <h1 class="large-text">ATN SHOP</h1>
+  </header>
 <body>
-    <h1>CREATE: May Node and Express be with you.</h1>
+    <h1>New Product</h1>
 
     <!-- (1): CREATE Task -->
     <form action="/quotes" method="POST">
-        <input type="text" placeholder="name" name="name" />
-        <input type="text" placeholder="quote" name="quote" />
+        <input type="text" placeholder="Product's name" name="name" />
+        <input type="text" placeholder="Price" name="quote" />
         <button type="submit">Submit</button>
     </form>
+    
+    <form action="/" method="GET">
+        <input type="text" placeholder="Search by name" name="search" />
+        <button type="submit">Search</button>
+    </form>
 
+    <% if (!req.query.search) { %>
     <!-- (2) READ Task -->
-    <h2> READ: All Quotes in Database </h2>
+    <h2> All products </h2>
     <ul class="quotes">
         <!-- Loop through quotes -->
-        <% for(var i = 0; i < quotes.length; i++) {%>
+        <% quotes.forEach(quote => { %>
+        <!-- Display quotes -->
         <li class="quote">
             <!-- Output name from the iterated quote object -->
-            <span><%= quotes[i].name %></span>:
+            <span><%= quote.name %></span>:
             <!-- Output quote from the iterated quote object -->
-            <span><%= quotes[i].quote %></span>
+            <span><%= quote.quote %></span>
             <!-- Edit button -->
-            <form action="/quotes/<%= quotes[i]._id %>/edit" method="GET">
+            <form action="/quotes/<%= quote._id %>/edit" method="GET">
                 <button type="submit">Edit</button>
             </form>
             <!-- Delete button -->
-            <form action="/quotes/<%= quotes[i]._id %>/delete" method="POST">
+            <form action="/quotes/<%= quote._id %>/delete" method="POST">
                 <button type="submit">Delete</button>
             </form>
         </li>
-        <% } %>
+        <% }) %>
     </ul>
+    <% } else { %>
+    <!-- Display search results -->
+    <h2> Search Results </h2>
+    <ul class="quotes">
+        <!-- Loop through filtered quotes -->
+        <% quotes.filter(quote => {
+            return quote.name.toLowerCase().includes(req.query.search.toLowerCase());
+        }).forEach(quote => { %>
+        <!-- Display filtered quotes -->
+        <li class="quote">
+            <!-- Output name from the iterated quote object -->
+            <span><%= quote.name %></span>:
+            <!-- Output quote from the iterated quote object -->
+            <span><%= quote.quote %></span>
+            <!-- Edit button -->
+            <form action="/quotes/<%= quote._id %>/edit" method="GET">
+                <button type="submit">Edit</button>
+            </form>
+            <!-- Delete button -->
+            <form action="/quotes/<%= quote._id %>/delete" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        <% }) %>
+    </ul>
+    <a href="/">All products</a>
+    <% } %>
 </body>
 
 </html>

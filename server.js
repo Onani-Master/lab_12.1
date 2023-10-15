@@ -23,10 +23,13 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         app.get('/', (req, res) => {
             db.collection('quotes').find().toArray()
                 .then(results => {
-                    res.render('index.ejs', { quotes: results })
+                    res.render('index.ejs', { quotes: results, req: req }) // Pass req as a parameter
                 })
                 .catch(error => console.error(error))
         })
+        //search
+
+        //
 
         app.post('/quotes', (req, res) => {
             quotesCollection.insertOne(req.body)
