@@ -7,9 +7,9 @@
     <title>Star Wars Quote App</title>
     <style>
         /* Add CSS styling here */
-        .header {
+        /* .header {
         text-align: center;
-        color: #333;
+        color: red;
         }
 
         body {
@@ -72,7 +72,90 @@
             border-radius: 5px;
             cursor: pointer;
             margin-left: 10px;
-        }
+        } */
+
+
+
+
+
+        .header {
+    text-align: center;
+    color: white;
+    background-color: rgb(0, 140, 255);
+    padding: 20px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+form {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+    margin-right: 10px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.quote {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: calc(33.33% - 20px);
+}
+
+.quote-image {
+    margin-right: 10px;
+}
+
+.quote-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-details span {
+    font-size: 16px;
+    color: #333;
+}
+
+
+
+.quote button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.quotes {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
     </style>
 </head>
 <header class="header">
@@ -85,6 +168,7 @@
     <form action="/quotes" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Product's name" name="name" />
         <input type="text" placeholder="Price" name="quote" />
+        <p>Image: </p>
         <input type="file" placeholder="Image" name="image1" />
 
         <button type="submit">Submit</button>
@@ -101,23 +185,28 @@
     <ul class="quotes">
         <!-- Loop through quotes -->
         <% quotes.forEach(quote => { %>
-        <!-- Display quotes -->
-        <li class="quote">
-            <!-- Output name from the iterated quote object -->
-            <span><%= quote.name %></span>:
-            <!-- Output quote from the iterated quote object -->
-            <span><%= quote.quote %></span>
-            <span><img src="/images/<%=quote.image1 %>" width="300px" height="200px"></span>
-            <!-- Edit button -->
-            <form action="/quotes/<%= quote._id %>/edit" method="GET">
-                <button type="submit">Edit</button>
-            </form>
-            <!-- Delete button -->
-            <form action="/quotes/<%= quote._id %>/delete" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-        </li>
+            <!-- Display quotes -->
+            <li class="quote">
+                <div class="quote-image">
+                    <img src="/images/<%=quote.image1 %>" width="300px" height="200px">
+                </div>
+                <div class="quote-details">
+                    <!-- Output name from the iterated quote object -->
+                    <span><%= quote.name %></span>
+                    <!-- Output quote from the iterated quote object -->
+                    <span><%= quote.quote %></span>
+                    <!-- Edit button -->
+                    <form action="/quotes/<%= quote._id %>/edit" method="GET">
+                        <button type="submit">Edit</button>
+                    </form>
+                    <!-- Delete button -->
+                    <form action="/quotes/<%= quote._id %>/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
         <% }) %>
+        
     </ul>
     <% } else { %>
     <!-- Display search results -->
@@ -129,20 +218,23 @@
         }).forEach(quote => { %>
         <!-- Display filtered quotes -->
         <li class="quote">
-            <!-- Output name from the iterated quote object -->
-            <span><%= quote.name %></span>:
-            <!-- Output quote from the iterated quote object -->
-            <span><%= quote.quote %></span>
-            <span><img src="/images/<%=quote.image1 %>" alt="Product Image" width="300px" height="200px"></span>
-
-            <!-- Edit button -->
-            <form action="/quotes/<%= quote._id %>/edit" method="GET">
-                <button type="submit">Edit</button>
-            </form>
-            <!-- Delete button -->
-            <form action="/quotes/<%= quote._id %>/delete" method="POST">
-                <button type="submit">Delete</button>
-            </form>
+            <div class="quote-image">
+                <img src="/images/<%=quote.image1 %>" width="300px" height="200px">
+            </div>
+            <div class="quote-details">
+                <!-- Output name from the iterated quote object -->
+                <span><%= quote.name %></span>
+                <!-- Output quote from the iterated quote object -->
+                <span><%= quote.quote %></span>
+                <!-- Edit button -->
+                <form action="/quotes/<%= quote._id %>/edit" method="GET">
+                    <button type="submit">Edit</button>
+                </form>
+                <!-- Delete button -->
+                <form action="/quotes/<%= quote._id %>/delete" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </li>
         <% }) %>
     </ul>
