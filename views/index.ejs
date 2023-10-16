@@ -82,9 +82,11 @@
     <h1>New Product</h1>
 
     <!-- (1): CREATE Task -->
-    <form action="/quotes" method="POST">
+    <form action="/quotes" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Product's name" name="name" />
         <input type="text" placeholder="Price" name="quote" />
+        <input type="file" placeholder="Image" name="image1" />
+
         <button type="submit">Submit</button>
     </form>
     
@@ -105,6 +107,7 @@
             <span><%= quote.name %></span>:
             <!-- Output quote from the iterated quote object -->
             <span><%= quote.quote %></span>
+            <span><img src="/images/<%=quote.image1 %>" width="300px" height="200px"></span>
             <!-- Edit button -->
             <form action="/quotes/<%= quote._id %>/edit" method="GET">
                 <button type="submit">Edit</button>
@@ -130,6 +133,8 @@
             <span><%= quote.name %></span>:
             <!-- Output quote from the iterated quote object -->
             <span><%= quote.quote %></span>
+            <span><img src="/images/<%=quote.image1 %>" alt="Product Image" width="300px" height="200px"></span>
+
             <!-- Edit button -->
             <form action="/quotes/<%= quote._id %>/edit" method="GET">
                 <button type="submit">Edit</button>

@@ -76,6 +76,7 @@
         <form action="/quotes/<%= quote._id %>/update" method="POST">   
             <input type="text" placeholder="name" name="name" value="<%= quote.name %>" />        
             <input type="text" placeholder="quote" name="quote" value="<%= quote.quote %>" />
+            <input type="file" placeholder="Image" name="image1" />
             <button type="submit">Update</button>
         </form>
         <a href="/">Back to Home</a>

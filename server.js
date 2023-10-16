@@ -1,6 +1,7 @@
 // server.js
 const express = require('express');
 const bodyParser = require('body-parser');
+const multer = require('multer')
 const app = express();
 
 const MongoClient = require('mongodb').MongoClient;
@@ -19,6 +20,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         app.use(bodyParser.urlencoded({ extended: true }))
         app.use(express.static('public'))
         app.use(bodyParser.json())
+        //
+        app.use('/images', express.static('images'));
 
         app.get('/', (req, res) => {
             db.collection('quotes').find().toArray()
@@ -27,9 +30,32 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
                 })
                 .catch(error => console.error(error))
         })
-        //search
-
         //
+        const storage = multer.diskStorage({
+            destination: function (req, file, cb) {
+              cb(null, 'images');
+            },
+            filename: function (req, file, cb) {
+              // Generate a unique filename for the uploaded image
+              const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+              cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.originalname.split('.').pop());
+            }
+          });
+          
+          const upload = multer({ storage: storage });
+    
+          app.post('/quotes', upload.single('image1'), (req, res) => {
+            const quote = req.body;
+            quote.image1 = req.file.filename; // Save the filename in the product object
+            // Save the product to the database with the image filename
+            quotesCollection.insertOne(quote)
+              .then(result => {
+                console.log(result);
+                res.redirect('/');
+              })
+              .catch(error => console.error(error));
+          });
+    
 
         app.post('/quotes', (req, res) => {
             quotesCollection.insertOne(req.body)
